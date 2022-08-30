@@ -11,33 +11,36 @@
 </head>
 <body>
     <div id="app">
-      {{ paciente }}<br>
-        <!--<input type="text" :value="paciente" @keyup="paciente = $event.target.value">-->
-        <input type="text" v-model="paciente">
-        <hr>
-        <input type="radio" value="f" v-model="sexo">Feminino
-        <input type="radio" value="m" v-model="sexo">Masculino
-        <br>{{ sexo }}
-        <hr>
-        <select>
-          <option value="1">Básico 1</option>
-          <option value="1">Básico 2</option>
-          <option value="1">Master</option>
-          <hr>
-          
-        </select>
+        <span>Paciente: </span><input type="text" v-model="paciente">
+        <br>
+        <ul>
+            <li v-for="p in lista">{{p.nome}}, {{p.idade}}</li>
+        </ul>
     </div>
 
     <script>
-
+      
         const vm = new Vue({
             el: '#app',
             data: {
-              paciente: 'João da silva',
-              sexo:'',
-              plano:''
+                paciente: '',
+                pacientes: [
+                    { nome: 'Jorge Sant Ana', idade: 32 },
+                    { nome: 'João Santos', idade: 45},
+                    { nome: 'José Auguto', idade: 18 },
+                    { nome: 'Júnior Silva', idade: 20 },
+                    { nome: 'Julho Nogueira', idade: 50},
+                ],
+                lista: []
             },
-            methods: {}
+            methods: {},
+            computed: {},
+            watch: {
+                paciente(valorNovo) {
+                    console.log(valorNovo)
+                    this.lista = this.pacientes.filter(p => p.nome.match(valorNovo))
+                }
+            }
         })
 
     </script>
